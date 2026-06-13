@@ -1,8 +1,8 @@
-# 📚 BibliCursos
+# 📚 BiblioCursos
 
 ## Sobre o projeto
 
-O BibliCursos é uma biblioteca digital criada por Kevin Luan com apoio de Inteligência Artificial Generativa, desenvolvida para facilitar o acesso à educação gratuita e de qualidade.
+O BiblioCursos é uma biblioteca digital criada por Kevin Luan com apoio de Inteligência Artificial Generativa, desenvolvida para facilitar o acesso à educação gratuita e de qualidade.
 
 Seu objetivo é centralizar, organizar e divulgar cursos gratuitos oferecidos por instituições reconhecidas, funcionando como um catálogo inteligente que direciona o usuário para as páginas oficiais de cada instituição.
 
@@ -53,7 +53,7 @@ A arquitetura do projeto foi planejada para permitir a inclusão de novas instit
 
 ## Transparência
 
-O BibliCursos:
+O BiblioCursos:
 
 - Não hospeda cursos;
 - Não realiza matrículas;

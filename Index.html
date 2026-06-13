@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BiblioCursos | Biblioteca de Cursos Gratuitos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f7fafc;
+            color: #243447;
+            line-height: 1.6;
+        }
+
+        /* ========================= */
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        /* ========================= */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,.05);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #2463eb;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #27ae60;
+        }
+
+        .menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #2463eb;
+        }
+
+        /* ========================= */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 110px;
+            background: linear-gradient(135deg, #edf6ff, #ffffff, #eefcf4);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #1f2d3d;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #5b6777;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 34px;
+            background: #2463eb;
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #1f52c2;
+            box-shadow: 0 10px 20px rgba(36, 99, 235, 0.2);
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.08);
+        }
+
+        .hero-card h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .hero-card p {
+            font-size: 16px;
+        }
+
+        .hero-card ul {
+            padding-left: 20px;
+            color: #5b6777;
+            font-weight: 500;
+        }
+        
+        .hero-card li {
+            margin-bottom: 8px;
+        }
+
+        /* ========================= */
+        section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .section-sub {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+            color: #667;
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        /* ========================= */
+        /* Filtros */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #4a5568;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: #2463eb;
+            color: #2463eb;
+        }
+
+        .filter-btn.active {
+            background: #2463eb;
+            border-color: #2463eb;
+            color: white;
+        }
+
+        /* ========================= */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            transition: .3s;
+            box-shadow: 0 8px 30px rgba(0,0,0,.05);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f1f5f9;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.1);
+            border-color: #e2e8f0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #eaf5ff;
+            color: #2463eb;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            align-self: flex-start;
+        }
+
+        /* Cores dinâmicas para as badges */
+        .badge.senai { background: #ffebee; color: #d32f2f; }
+        .badge.senar { background: #e8f5e9; color: #2e7d32; }
+        .badge.fm2s { background: #f3e5f5; color: #7b1fa2; }
+        .badge.john { background: #fff8e1; color: #f57f17; }
+        .badge.unoeste { background: #e3f2fd; color: #1565c0; }
+        .badge.bradesco { background: #fce4ec; color: #c2185b; }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #1a202c;
+            flex-grow: 1; /* Preenche o espaço para alinhar o botão embaixo */
+        }
+
+        .card p {
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .card-btn {
+            background: #2463eb;
+            color: white;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            transition: background .3s;
+            display: block;
+            width: 100%;
+        }
+
+        .card-btn:hover {
+            background: #1e40af;
+        }
+
+        /* ========================= */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,.05);
+            border: 1px solid #f1f5f9;
+        }
+
+        .number {
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            background: #eaf5ff;
+            color: #2463eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ========================= */
+        .institutions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .inst {
+            background: white;
+            border-radius: 18px;
+            padding: 35px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,.05);
+            font-weight: 700;
+            font-size: 18px;
+            color: #334155;
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+        }
+
+        .inst:hover {
+            transform: translateY(-3px);
+            border-color: #2463eb;
+            color: #2463eb;
+        }
+
+        /* ========================= */
+        .mission {
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.04);
+            border: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        .mission p {
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+            font-size: 18px;
+            color: #475569;
+        }
+
+        /* ========================= */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 60px 0 40px 0;
+            margin-top: 70px;
+            text-align: center;
+        }
+
+        footer h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            margin-top: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        footer strong {
+            color: white;
+        }
+
+        /* ========================= */
+        @media(max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-card {
+                text-align: left;
+            }
+
+            .menu {
+                display: none; /* No futuro, pode-se adicionar um menu hambúrguer aqui */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+    			<img src="BiblioCursos_logo.png" alt="Logo BiblioCursos" style="height: 50px; vertical-align: middle;">
+		</a>
+                <ul class="menu">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#como">Como Funciona</a></li>
+                    <li><a href="#cursos">Diretório de Cursos</a></li>
+                    <li><a href="#instituicoes">Instituições</a></li>
+                    <li><a href="#missao">Missão</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <h1>Conhecimento gratuito pode transformar o seu futuro.</h1>
+                <p>Encontre cursos gratuitos de instituições reconhecidas e acesse diretamente seus ambientes oficiais de aprendizagem.</p>
+                <a href="#cursos" class="btn">Explorar Cursos</a>
+            </div>
+            <div class="hero-card">
+                <h3>📚 O que é o BiblioCursos?</h3>
+                <p>Uma biblioteca digital que reúne cursos gratuitos de instituições reconhecidas, facilitando o acesso ao conhecimento e direcionando sempre para os ambientes oficiais.</p>
+                <br>
+                <ul>
+                    <li>✓ Educação gratuita e de qualidade</li>
+                    <li>✓ Instituições confiáveis e renomadas</li>
+                    <li>✓ Direcionamento para links oficiais</li>
+                    <li>✓ Organização inteligente por áreas</li>
+                    <li>✓ Fácil navegação e acesso</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="como">
+        <div class="container">
+            <h2 class="section-title">Como funciona</h2>
+            <p class="section-sub">Um processo simples, ágil e transparente para conectar você às plataformas oficiais educacionais.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="number">1</div>
+                    <h3>Encontre sua área</h3>
+                    <p>Navegue pelas categorias e filtre as oportunidades pela instituição ou área de interesse.</p>
+                </div>
+                <div class="step">
+                    <div class="number">2</div>
+                    <h3>Descubra o conteúdo</h3>
+                    <p>Conheça rapidamente o escopo do curso através de nossos cards informativos organizados.</p>
+                </div>
+                <div class="step">
+                    <div class="number">3</div>
+                    <h3>Acesse o site oficial</h3>
+                    <p>Ao clicar, você será direcionado de forma segura para o portal oficial da instituição responsável.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cursos">
+        <div class="container">
+            <h2 class="section-title">Diretório de Cursos</h2>
+            <p class="section-sub">Filtre por instituição e encontre a área ideal para o seu desenvolvimento profissional.</p>
+            
+            <!-- Filtros Dinâmicos -->
+            <div class="filters" id="filter-container">
+                <button class="filter-btn active" data-filter="Todos">Todas as Instituições</button>
+                <button class="filter-btn" data-filter="SENAI">SENAI</button>
+                <button class="filter-btn" data-filter="SENAR">SENAR</button>
+                <button class="filter-btn" data-filter="FM2S">FM2S</button>
+                <button class="filter-btn" data-filter="John Deere">John Deere</button>
+                <button class="filter-btn" data-filter="Unoeste">Unoeste</button>
+                <button class="filter-btn" data-filter="Fundação Bradesco">Fundação Bradesco</button>
+            </div>
+
+            <!-- Grid onde os cursos serão renderizados pelo JavaScript -->
+            <div class="cards" id="cursos-grid">
+                <!-- Os cards serão injetados aqui -->
+            </div>
+        </div>
+    </section>
+
+    <section id="instituicoes">
+        <div class="container">
+            <h2 class="section-title">Instituições Parceiras</h2>
+            <p class="section-sub">O projeto organiza o conhecimento oferecido por algumas das mais respeitadas instituições de ensino e capacitação do país.</p>
+            <div class="institutions">
+                <div class="inst">SENAI</div>
+                <div class="inst">SENAR</div>
+                <div class="inst">FM2S</div>
+                <div class="inst">John Deere</div>
+                <div class="inst">Unoeste</div>
+                <div class="inst">Fundação Bradesco</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="missao">
+        <div class="container">
+            <div class="mission">
+                <h2 class="section-title">Nossa Missão</h2>
+                <p>Acreditamos que a educação é uma das ferramentas mais importantes para transformar vidas. O BiblioCursos atua como um hub central, com o objetivo de facilitar o acesso ao aprendizado gratuito e organizar oportunidades de qualificação profissional.</p>
+                <p>Nossa plataforma foi desenvolvida para incentivar o desenvolvimento contínuo de estudantes, produtores rurais, trabalhadores e profissionais de todas as áreas, sempre os conectando diretamente à fonte do conhecimento.</p>
+                <p style="font-size: 14px; margin-top: 30px; color: #94a3b8;"><em>Nota de Transparência: O BiblioCursos não hospeda cursos nem realiza matrículas. As marcas e conteúdos educacionais apresentados pertencem exclusivamente às respectivas instituições listadas.</em></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2>BiblioCursos</h2>
+            <p>"A educação é uma das ferramentas mais poderosas para transformar vidas."</p>
+            <p>Este site atua apenas como agregador de informações e direciona usuários para páginas oficiais das respectivas instituições. Todas as marcas e conteúdos pertencem aos seus respectivos proprietários.</p>
+            <p style="margin-top: 30px; font-size: 14px;">Criado por <strong>Kevin Luan</strong> com apoio de IA Generativa.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Banco de Dados estruturado com todos os links e informações do documento
+        const cursosData = [
+            // SENAI
+            { inst: "SENAI", area: "Administração e Gestão", desc: "Cursos livres voltados para o desenvolvimento de habilidades em gestão, negócios e administração.", link: "https://www.sp.senai.br/cursos/cursos-livres/administracao-e-gestao?modalidade=3&gratuito=1", classBadge: "senai" },
+            { inst: "SENAI", area: "Tecnologia e Informática", desc: "Capacitações em tecnologia da informação, programação, redes e ferramentas digitais avançadas.", link: "https://www.sp.senai.br/cursos/cursos-livres/tecnologia-da-informacao-e-informatica?modalidade=3&gratuito=1", classBadge: "senai" },
+            
+            // FM2S
+            { inst: "FM2S", area: "Diversas Áreas (Catálogo Geral)", desc: "Acesse cursos gratuitos focados em melhoria contínua, Lean Six Sigma, gestão e excelência operacional.", link: "https://www.fm2s.com.br/cursos/gratuitos?gad_source=1", classBadge: "fm2s" },
+            
+            // SENAR
+            { inst: "SENAR", area: "Agricultura Anual", desc: "Capacitação profissional e boas práticas para o cultivo e manejo de agricultura anual.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=agricultura-anual", classBadge: "senar" },
+            { inst: "SENAR", area: "Apicultura", desc: "Técnicas de manejo, produção e processamento para a criação de abelhas e produção de mel.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=apicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Avicultura de Corte", desc: "Manejo nutricional, sanitário e práticas adequadas para a criação de aves de corte.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=avicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Avicultura de Postura", desc: "Técnicas e inovações aplicadas à produção de ovos e manejo de aves de postura.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=avicultura-de-postura", classBadge: "senar" },
+            { inst: "SENAR", area: "Bovinocultura de Corte", desc: "Práticas e gestão para aprimorar a eficiência produtiva na criação de gado de corte.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=bovinocultura-de-corte", classBadge: "senar" },
+            { inst: "SENAR", area: "Bovinocultura de Leite", desc: "Manejo, nutrição e boas práticas voltadas para otimização da produção leiteira.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=bovinocultura-de-leite", classBadge: "senar" },
+            { inst: "SENAR", area: "Cacauicultura", desc: "Técnicas sustentáveis de cultivo, manejo e processamento na produção de cacau.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=cacauicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Cafeicultura", desc: "Capacitações para o desenvolvimento, plantio, colheita e gestão da produção de café.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=cafeicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Caprinocultura de Corte", desc: "Manejo e criação estratégica de caprinos destinados à produção de carne.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=ovinocaprinocultura-de-corte", classBadge: "senar" },
+            { inst: "SENAR", area: "Caprinocultura de Leite", desc: "Técnicas para a criação de caprinos com foco na alta produtividade leiteira.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=ovinocaprinocultura-de-leite", classBadge: "senar" },
+            { inst: "SENAR", area: "Carcinocultura", desc: "Introdução e aprimoramento em técnicas para criação produtiva de camarões.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=carcinicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Equideocultura", desc: "Manejo sanitário, nutricional e reprodutivo voltado para a criação de equinos.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=equinocultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Forragicultura", desc: "Implantação e manejo de pastagens e forrageiras para alimentação animal.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=forragicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Olericultura", desc: "Práticas de cultivo e manejo sustentável na produção de hortaliças.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=olericultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Ovinocultura de Corte", desc: "Capacitação nas práticas de criação e engorda de ovinos para corte.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=ovinocultura-de-corte", classBadge: "senar" },
+            { inst: "SENAR", area: "Ovinocultura de Leite", desc: "Técnicas de manejo para otimizar a produção de leite em rebanhos ovinos.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=ovinocultura-de-leite", classBadge: "senar" },
+            { inst: "SENAR", area: "Silvicultura", desc: "Manejo florestal, plantio e gestão de áreas destinadas ao cultivo de árvores.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=silvicultura", classBadge: "senar" },
+            { inst: "SENAR", area: "Suinocultura", desc: "Instalações, manejo e boas práticas aplicadas na criação moderna de suínos.", link: "https://ead.senar.org.br/matriculas-abertas?ver-todos=1&page=1&cadeia-produtiva=suinocultura", classBadge: "senar" },
+            
+            // John Deere
+            { inst: "John Deere", area: "Área Agrícola", desc: "Treinamentos online sobre equipamentos, tecnologias e operações agrícolas John Deere.", link: "https://campus.deere.com.br/courses?lineOfBusiness=AGRICULTURAL&category=&id=&types=ONLINE", classBadge: "john" },
+            { inst: "John Deere", area: "Área Florestal", desc: "Capacitação online especializada no setor de maquinário e operações florestais.", link: "https://campus.deere.com.br/courses?lineOfBusiness=FORESTRY&category=&id=&types=ONLINE", classBadge: "john" },
+            
+            // Unoeste
+            { inst: "Unoeste", area: "Ciências Agrárias", desc: "Cursos livres a distância com foco no agronegócio e nas ciências agrárias.", link: "https://www.unoeste.br/cursoslivres/cursos/ead?a=7", classBadge: "unoeste" },
+            { inst: "Unoeste", area: "Ciências Exatas", desc: "Cursos livres a distância abordando temas fundamentais da área de exatas.", link: "https://www.unoeste.br/cursoslivres/cursos/ead?a=6", classBadge: "unoeste" },
+            
+            // Fundação Bradesco
+            { inst: "Fundação Bradesco", area: "Análise de Dados", desc: "Cursos sobre ciência de dados, estatística, big data e ferramentas de BI.", link: "https://www.ev.org.br/areas-de-interesse/analise-de-dados", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Desenvolvimento Pessoal", desc: "Capacitações para melhorar soft skills, comunicação, liderança e carreira.", link: "https://www.ev.org.br/areas-de-interesse/desenvolvimento-pessoal-e-profissional", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Inteligência Artificial", desc: "Introdução e aprofundamento aos conceitos e aplicações práticas de IA.", link: "https://www.ev.org.br/areas-de-interesse/inteligencia-artificial", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Negócios e Inovação", desc: "Cursos focados em empreendedorismo, gestão de projetos, vendas e inovação.", link: "https://www.ev.org.br/areas-de-interesse/negocios-e-inovacao", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Produtividade", desc: "Metodologias, organização de tempo e ferramentas para impulsionar sua produtividade.", link: "https://www.ev.org.br/areas-de-interesse/produtividade", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Programação", desc: "Lógica de programação, desenvolvimento web e principais linguagens do mercado.", link: "https://www.ev.org.br/areas-de-interesse/programacao", classBadge: "bradesco" },
+            { inst: "Fundação Bradesco", area: "Tecnologia da Informação", desc: "Cursos sobre infraestrutura, redes, segurança da informação e conceitos de TI.", link: "https://www.ev.org.br/areas-de-interesse/tecnologia-da-informacao", classBadge: "bradesco" }
+        ];
+
+        const gridContainer = document.getElementById('cursos-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // Função para gerar os cards em HTML a partir dos dados (JSON/Array)
+        function renderCards(filter) {
+            gridContainer.innerHTML = ''; // Limpa o grid
+
+            const filteredData = filter === 'Todos' 
+                ? cursosData 
+                : cursosData.filter(curso => curso.inst === filter);
+
+            filteredData.forEach(curso => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="badge ${curso.classBadge}">${curso.inst}</div>
+                    <h3>${curso.area}</h3>
+                    <p>${curso.desc}</p>
+                    <a href="${curso.link}" target="_blank" rel="noopener noreferrer" class="card-btn">
+                        Ir para o Curso ➜
+                    </a>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // Adiciona evento de clique aos botões de filtro
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove a classe active de todos os botões
+                filterBtns.forEach(b => b.classList.remove('active'));
+                
+                // Adiciona a classe active no botão clicado
+                e.target.classList.add('active');
+                
+                // Pega o valor do filtro e renderiza
+                const filterValue = e.target.getAttribute('data-filter');
+                renderCards(filterValue);
+            });
+        });
+
+        // Inicializa renderizando todos os cursos
+        renderCards('Todos');
+
+    </script>
+</body>
+</html>
